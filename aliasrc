@@ -1,0 +1,33 @@
+#!/bin/sh
+
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+alias please="sudo"
+alias vim="nvim"
+alias ll='ls -alF'
+alias la='exa -al --color=always --group-directories-first'
+# alias cb='xsel -ib'
+alias cb='xclip -selection c'
+alias toggleaudio='/home/paul/scripts/toggle-audio.sh'
+# alias l='ls -CF'
+alias debugoff="find -name settings.py -exec sed -i 's/DEBUG\s*=\s*True/DEBUG=False/g' {} \+"
+alias debugon="find -name settings.py -exec sed -i 's/DEBUG\s*=\s*False/DEBUG=True/g' {} \+"
+alias dtr="find -name settings.py -exec sed -i 's/DEBUG\s*=\s*False/DEBUG=True/g' {} \+ && sudo service apache2 restart"
+alias dfr="find -name settings.py -exec sed -i 's/DEBUG\s*=\s*True/DEBUG=False/g' {} \+ && sudo service apache2 restart"
+alias wttr="curl wttr.in"
+alias gits="git status"
+alias gac="git add -u && git commit -m"
+alias so="source $HOME/.zshrc"
+
+vf() { fzf --reverse --prompt=">> " | xargs -r $EDITOR }
+vfc() { tmp=$( fzf --reverse --prompt=">> ") && cd $( dirname "$tmp" ) && basename $tmp | xargs $EDITOR }
+vff() { tmpcmd=$FZF_DEFAULT_COMMAND; FZF_DEFAULT_COMMAND='fd -H . $HOME'; vf ; FZF_DEFAULT_COMMAND=$tmpcmd }
+vffc() { tmpcmd=$FZF_DEFAULT_COMMAND; FZF_DEFAULT_COMMAND='fd -H . $HOME'; vfc ; FZF_DEFAULT_COMMAND=$tmpcmd }
