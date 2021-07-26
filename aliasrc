@@ -27,6 +27,12 @@ alias gits="git status"
 alias gac="git add -u && git commit -m"
 alias so="source $HOME/.zshrc"
 
+alias glap="git log --patch -1"
+alias glp="git log --patch"
+alias gcm="git commit -m"
+alias gp="git push"
+alias gd="git diff"
+
 vf() { fzf --reverse --prompt=">> " | xargs -r $EDITOR }
 vfc() { tmp=$( fzf --reverse --prompt=">> ") && cd $( dirname "$tmp" ) && basename $tmp | xargs $EDITOR }
 vff() { tmpcmd=$FZF_DEFAULT_COMMAND; FZF_DEFAULT_COMMAND='fd -H . $HOME'; vf ; FZF_DEFAULT_COMMAND=$tmpcmd }
