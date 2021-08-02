@@ -36,6 +36,7 @@ alias gp="git push"
 alias gd="git diff"
 alias chx="echo 'chimken' && chmod 755"
 alias fzf='fzf --reverse --prompt=">> "'
+alias q='qutebrowser'
 
 vf() { fd -H | fzf  | xargs -r $EDITOR }
 vff() { fd -H . $HOME | fzf  | xargs -r $EDITOR }
