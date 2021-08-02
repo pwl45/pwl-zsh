@@ -1,0 +1,14 @@
+alt + c
+	/home/paul/scripts/web_bookmarks.sh -c
+alt + q
+	/home/paul/scripts/qrclip.sh
+alt + r
+	xdotool keyup r key --clearmodifiers alt+h
+alt + d
+	/home/paul/scripts/bookclip.sh
+ctrl + Return
+ 	xdotool keyup Return key --clearmodifiers End && xdotool key --clearmodifiers Return
+#ctrl + h
+#	xdotool keyup h key --clearmodifiers Home
+# ctrl + l
+#	xdotool keyup l key --clearmodifiers End
