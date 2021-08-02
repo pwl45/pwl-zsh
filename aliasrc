@@ -10,6 +10,7 @@ if [ -x /usr/bin/dircolors ]; then
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
+alias epsxe="ePSXe"
 alias please="sudo"
 alias vim="nvim"
 alias ll='ls -alF'
@@ -26,14 +27,52 @@ alias wttr="curl wttr.in"
 alias gits="git status"
 alias gac="git add -u && git commit -m"
 alias so="source $HOME/.zshrc"
+alias sa="source $HOME/.config/aliasrc"
 
 alias glap="git log --patch -1"
 alias glp="git log --patch"
 alias gcm="git commit -m"
 alias gp="git push"
 alias gd="git diff"
+alias chx="echo 'chimken' && chmod 755"
+alias fzf='fzf --reverse --prompt=">> "'
 
-vf() { fzf --reverse --prompt=">> " | xargs -r $EDITOR }
-vfc() { tmp=$( fzf --reverse --prompt=">> ") && cd $( dirname "$tmp" ) && basename $tmp | xargs $EDITOR }
-vff() { tmpcmd=$FZF_DEFAULT_COMMAND; FZF_DEFAULT_COMMAND='fd -H . $HOME'; vf ; FZF_DEFAULT_COMMAND=$tmpcmd }
+vf() { fd -H | fzf  | xargs -r $EDITOR }
+vff() { fd -H . $HOME | fzf  | xargs -r $EDITOR }
+# ccv() { tmp=$(fd -H -t d . $HOME | fzf) && cd $tmp }
+vfc() { tmp=$( fzf ) && cd $( dirname "$tmp" ) && basename $tmp | xargs $EDITOR }
+# TODO: Refactor these 
 vffc() { tmpcmd=$FZF_DEFAULT_COMMAND; FZF_DEFAULT_COMMAND='fd -H . $HOME'; vfc ; FZF_DEFAULT_COMMAND=$tmpcmd }
+cv() { tmp=$(fd -H -t d | fzf) && cd $tmp }
+ccv() { tmp=$(fd -H -t d . $HOME | fzf) && cd $tmp }
+
+# ZLE Bindings are useless because of the fucking terminal liitations. 
+# function vf-z() { vf ; zle reset-prompt; zle redisplay; zle-keymap-select}
+# zle -N vf-z
+# bindkey '^f' vf-z
+
+# function cv-z() { cv; zle reset-prompt; zle redisplay; zle-keymap-select}
+# zle -N cv-z
+# bindkey '^g' cv-z
+
+
+# function vff-z() { vff ; zle reset-prompt; zle redisplay; zle-keymap-select}
+# zle -N vff-z
+# bindkey '^F' vff-z
+
+# function ccv-z() { ccv; zle reset-prompt; zle redisplay; zle-keymap-select}
+# zle -N ccv-z
+# bindkey '^G' ccv-z
+# Stuff that could be useful with widgets n shit
+# function vf-z() { fd -H . $HOME | fzf | xargs -r $EDITOR; zle reset-prompt; zle redisplay}
+# function vf-z() { vf ; zle reset-prompt; zle redisplay}
+# function vf-z-f() { zle kill-whole-line; zle -U "vf\r"; zle accept-line }
+
+# function _git-status {
+#     zle kill-whole-line
+#     zle -U "git status"
+#     zle accept-line
+# }
+# zle -N _git-status
+# zle -N vf-z
+# zle -N vf-z-f
