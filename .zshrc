@@ -1,14 +1,19 @@
 # Luke's config for the Zoomer Shell
 
 # Enable colors and change prompt:
+# fortune | cowsay
+# $HOME/scripts/simple-unix
 autoload -U colors && colors
 # PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
-PS1="%B%{$fg[green]%}%n%{$fg[green]%}@%{$fg[green]%}%M%{$fg[white]%}:%{$fg[blue]%}%~%{$reset_color%}$%b "
-
+# PS1="%B%{$fg[green]%}%n%{$fg[green]%}@%{$fg[green]%}%M%{$fg[white]%}:%{$fg[blue]%}%~%{$reset_color%}$%b "
+# PS1="%B%{$fg[green]%}%n%{$fg[green]%}: %{$fg[blue]%}%~%{$reset_color%}$%b "
+PS1='%~: '
+PS1="%B%F{160%}%~%{$reset_color%}:%b "
 # History in cache directory:
-HISTSIZE=100000
-SAVEHIST=100000
-HISTFILE=~/.zhistory
+HISTSIZE=1000000
+SAVEHIST=1000000
+HISTFILE=$HOME/.zhistory
+MYVIMRC=$HOME/.config/nvim/init.vim
 export EDITOR=nvim
 export FZF_DEFAULT_COMMAND="fd -H"
 
@@ -51,6 +56,7 @@ zle -N zle-line-init
 echo -ne '\e[5 q' # Use beam shape cursor on startup.
 preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
+
 # Use lf to switch directories and bind it to ctrl-o
 lfcd () {
     tmp="$(mktemp)"
@@ -64,9 +70,11 @@ lfcd () {
 bindkey -s '^o' 'lfcd\n'
 
 
-export MANPAGER='/bin/bash -c "vim -MRn -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma\" -c \"normal L\" -c \"nmap q :qa<CR>\"</dev/tty <(col -b)"'
+# export MANPAGER='/bin/bash -c "\vim -MRn -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma\" -c \"normal L\" -c \"nmap q :qa<CR>\"</dev/tty <(col -b)"'
+
+export MANPAGER="nvim +Man!"
 # Set nvim as manpager
-export MANPAGER="nvim -c 'set ft=man' -"
+# export MANPAGER="nvim -c 'set ft=man' -"
 
 
 # Edit line in vim with ctrl-e:
@@ -74,7 +82,6 @@ autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 
 alias history="history 1"
-
 # Load aliases and shortcuts if existent.
 # [ -f "$HOME/.config/shortcutrc" ] && source "$HOME/.config/shortcutrc"
 [ -f "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
@@ -93,3 +100,5 @@ fpath=(~/zsh-completions/src $fpath)
 
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

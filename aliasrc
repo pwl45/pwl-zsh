@@ -26,8 +26,12 @@ alias dfr="find -name settings.py -exec sed -i 's/DEBUG\s*=\s*True/DEBUG=False/g
 alias wttr="curl wttr.in"
 alias gits="git status"
 alias gac="git add -u && git commit -m"
+alias gau="git add -u"
 alias so="source $HOME/.zshrc"
 alias sa="source $HOME/.config/aliasrc"
+alias va="vim $HOME/.config/aliasrc"
+alias ev="vim $MYVIMRC"
+alias std="st -d . &"
 
 alias glap="git log --patch -1"
 alias glp="git log --patch"
@@ -37,8 +41,24 @@ alias gd="git diff"
 alias chx="echo 'chimken' && chmod 755"
 alias fzf='fzf --reverse --prompt=">> "'
 alias q='qutebrowser'
+alias z='zathura'
+alias gr='grep -r'
 
+# nice things for movement
+alias emom="cd $HOME/qmk_firmware/keyboards/momoka_ergo/keymaps/momoka_ergo_beta && $EDITOR keymap.c"
+alias ths="cd $HOME/thesis/git"
+alias cspi="cd $HOME/pi/home/pi"
+alias ekm="emom"
+alias qc="qmk compile"
+alias qf="qmk flash && xset r rate 300 50"
+alias fm="qmk flash && echo '\n----------DONE----------\n' && qmk flash && xset r rate 300 50"
+alias cdd='cd $HOME/'
+
+
+alias fixaudio="pactl set-card-profile 0 output:analog-stereo && pactl set-card-profile 0 input:analog-stereo"
+zf() { fd -H ".*.pdf" | fzf | xargs -r zathura}
 vf() { fd -H | fzf  | xargs -r $EDITOR }
+ef() { fd -H | fzf  | xargs -r emacs }
 vff() { fd -H . $HOME | fzf  | xargs -r $EDITOR }
 # ccv() { tmp=$(fd -H -t d . $HOME | fzf) && cd $tmp }
 vfc() { tmp=$( fzf ) && cd $( dirname "$tmp" ) && basename $tmp | xargs $EDITOR }
@@ -47,10 +67,10 @@ vffc() { tmpcmd=$FZF_DEFAULT_COMMAND; FZF_DEFAULT_COMMAND='fd -H . $HOME'; vfc ;
 cv() { tmp=$(fd -H -t d | fzf) && cd $tmp }
 ccv() { tmp=$(fd -H -t d . $HOME | fzf) && cd $tmp }
 
-# ZLE Bindings are useless because of the fucking terminal liitations. 
-# function vf-z() { vf ; zle reset-prompt; zle redisplay; zle-keymap-select}
-# zle -N vf-z
-# bindkey '^f' vf-z
+# ZLE Bindings are annoying because of the fucking terminal liitations. 
+function vf-z() { vf ; zle reset-prompt; zle redisplay; zle-keymap-select}
+zle -N vf-z
+bindkey '^f' vf-z
 
 # function cv-z() { cv; zle reset-prompt; zle redisplay; zle-keymap-select}
 # zle -N cv-z
