@@ -1,4 +1,4 @@
-# Luke's config for the Zoomer Shell
+# Modified version of Luke's config for the Zoomer Shell
 
 # Enable colors and change prompt:
 # fortune | cowsay
@@ -7,7 +7,7 @@ autoload -U colors && colors
 # PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
 # PS1="%B%{$fg[green]%}%n%{$fg[green]%}@%{$fg[green]%}%M%{$fg[white]%}:%{$fg[blue]%}%~%{$reset_color%}$%b "
 # PS1="%B%{$fg[green]%}%n%{$fg[green]%}: %{$fg[blue]%}%~%{$reset_color%}$%b "
-PS1='%~: '
+# PS1='%~: '
 PS1="%B%F{160%}%~%{$reset_color%}:%b "
 # History in cache directory:
 HISTSIZE=1000000
@@ -15,7 +15,6 @@ SAVEHIST=1000000
 HISTFILE=$HOME/.zhistory
 MYVIMRC=$HOME/.config/nvim/init.vim
 export EDITOR=nvim
-export FZF_DEFAULT_COMMAND="fd -H"
 
 # Basic auto/tab complete:
 autoload -U compinit && compinit
@@ -67,15 +66,11 @@ lfcd () {
         [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
     fi
 }
-bindkey -s '^o' 'lfcd\n'
+# bindkey -s '^o' 'lfcd\n'
 
 
-# export MANPAGER='/bin/bash -c "\vim -MRn -c \"set buftype=nofile showtabline=0 ft=man ts=8 nomod nolist norelativenumber nonu noma\" -c \"normal L\" -c \"nmap q :qa<CR>\"</dev/tty <(col -b)"'
-
-export MANPAGER="nvim +Man!"
 # Set nvim as manpager
-# export MANPAGER="nvim -c 'set ft=man' -"
-
+export MANPAGER="nvim +Man!"
 
 # Edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
@@ -86,19 +81,21 @@ alias history="history 1"
 # [ -f "$HOME/.config/shortcutrc" ] && source "$HOME/.config/shortcutrc"
 [ -f "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
 
-# Load zsh-syntax-highlighting; should be last.
 # neofetch
-setxkbmap -option ctrl:nocaps
-xcape -e 'Control_L=Escape'
 
-# Set repeated keystroke rate.
-# 300: delay (ms) before first repeat
-# 50: following first repeat, # of repeats per second
-xset r rate 300 50
 
 fpath=(~/zsh-completions/src $fpath)
 
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
-source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND="fd -HI"
+export FZF_DEFAULT_OPTS="--reverse --height 70%"
+export FZF_COMPLETION_TRIGGER=''
+
+xset r rate 300 50
+setxkbmap -option ctrl:nocaps
+
+source "$HOME/.zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh"
+# Load zsh-syntax-highlighting; should be last.
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null 
